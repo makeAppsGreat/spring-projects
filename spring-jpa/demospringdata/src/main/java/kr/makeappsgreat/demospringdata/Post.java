@@ -39,6 +39,11 @@ public class Post {
         this.comments = comments;
     }
 
+    @Override
+    public String toString() {
+        return "Post{ title='" + title + "' }";
+    }
+
     public void addComment(Comment comment) {
         this.getComments().add(comment);
         comment.setPost(this);
