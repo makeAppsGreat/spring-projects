@@ -18,41 +18,31 @@ public class JpaRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Account account = new Account();
-        account.setUsername("makeappsgreat");
-        account.setPassword("hibernate");
+        /* Post post = new Post();
+        post.setTitle("Spring Data JPA 강좌 질문");
 
-        Account account2 = new Account();
-        account2.setUsername("youn");
-        account2.setPassword("hibernate");
+        Comment comment = new Comment();
+        comment.setComment("ㅇㅇ");
+        post.addComment(comment);
 
-        Study study = new Study();
-        study.setName("Spring DATA JPA");
-
-        Study study2 = new Study();
-        study2.setName("Spring Core");
-
-        Study study3 = new Study();
-        study3.setName("Spring REST Api");
-
-        /* account.getStudies().add(study);
-        account.getStudies().add(study2);
-        account2.getStudies().add(study3); */
-        account.addStudy(study);
-        account.addStudy(study2);
-        account2.addStudy(study3);
+        Comment comment2 = new Comment();
+        comment2.setComment("ㄴㄴ");
+        post.addComment(comment2); */
 
 
         Session session = entityManager.unwrap(Session.class);
-        session.save(account);
-        session.save(account2);
-        session.save(study);
-        session.save(study2);
-        session.save(study3);
+        // session.save(post);
 
+        Post post1 = session.get(Post.class, 4L);
+        // session.delete(post1);
+        System.out.println(">> " + post1.getTitle());
 
-        Account youn = session.load(Account.class, account2.getId());
-        System.out.println("================================================================================");
-        System.out.println(youn.getUsername());
+        /* Comment comment3 = session.get(Comment.class, 5L);
+        System.out.println(comment3.getComment()); */
+
+        post1.getComments().forEach(c -> {
+           System.out.println("  >> " + c.getComment());
+        });
+
     }
 }
