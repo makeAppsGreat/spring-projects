@@ -1,7 +1,6 @@
 package kr.makeappsgreat.demospringdata;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class Comment {
