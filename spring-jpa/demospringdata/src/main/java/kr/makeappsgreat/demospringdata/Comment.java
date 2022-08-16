@@ -13,6 +13,8 @@ public class Comment {
     @ManyToOne
     private Post post;
 
+    private Integer likeCount = 0;
+
     public Long getId() {
         return id;
     }
@@ -37,8 +39,16 @@ public class Comment {
         this.post = post;
     }
 
+    public Integer getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
+    }
+
     @Override
     public String toString() {
-        return "Comment{ comment='" + comment + "' }";
+        return "Comment{ comment='" + comment + "', likeCount=" + likeCount + " }";
     }
 }
