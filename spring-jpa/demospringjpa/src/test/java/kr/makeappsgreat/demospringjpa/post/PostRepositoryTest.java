@@ -1,5 +1,6 @@
 package kr.makeappsgreat.demospringjpa.post;
 
+import com.querydsl.core.types.Predicate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,31 +29,11 @@ class PostRepositoryTest {
         Post post = new Post();
         post.setTitle("Hello, JPA!");
         post.setContent("안녕, JPA!");
-
-        // PostRepository extends JpaRepository<Post, Long>, PostCustomRepository<Post>
-        /* postRepository.save(post);
-
-        // When
-        List<Post> posts = postRepository.findMyPost();
-
-        // Then
-        assertThat(posts.size()).isEqualTo(1);
-
-        // When
-        posts.forEach(p -> {
-            System.out.println(p);
-            postRepository.delete(p);
-        });
-        posts = postRepository.findMyPost();
-
-        // Then
-        assertThat(posts.size()).isEqualTo(0); */
-
-        assertThat(postRepository.contains(post)).isFalse();
-
         postRepository.save(post.publish());
 
-        assertThat(postRepository.contains(post)).isTrue();
+        Predicate predicate = QPost.post.title.containsIgnoreCase("jpa");
+        Optional<Post> one = postRepository.findOne(predicate);
+        assertThat(one).isNotEmpty();
     }
 
     /* @Test
