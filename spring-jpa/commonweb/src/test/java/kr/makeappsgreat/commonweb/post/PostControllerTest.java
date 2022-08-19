@@ -21,19 +21,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-// @SpringBootTest
-// @AutoConfigureMockMvc
-@DataJpaTest
+@SpringBootTest
+@AutoConfigureMockMvc
 class PostControllerTest {
 
     @Autowired
     private PostRepository postRepository;
 
-    // @Autowired
-    // private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @PersistenceContext
-    private EntityManager entityManager;
 
     @Test
     public void crud() {
@@ -44,30 +41,6 @@ class PostControllerTest {
     }
 
     @Test
-    public void save() {
-        Post post = new Post();
-        // post.setId(1L);
-        post.setTitle("jpa");
-        Post savedPost = postRepository.save(post); // Id is not exist. -> persist
-
-        assertThat(entityManager.contains(post)).isTrue();
-        assertThat(entityManager.contains(savedPost)).isTrue();
-        assertThat(savedPost == post);
-
-        Post updatePost = new Post();
-        updatePost.setId(post.getId());
-        updatePost.setTitle("hibernate");
-        Post updatedPost = postRepository.save(post); // Id is exist. -> merge
-
-        assertThat(entityManager.contains(updatedPost)).isTrue();
-        assertThat(entityManager.contains(updatePost)).isFalse();
-        assertThat(updatedPost == updatePost);
-
-        List<Post> all = postRepository.findAll();
-        assertThat(all.size()).isEqualTo(1);
-    }
-
-    /* @Test
     public void getPost() throws Exception {
         Post post = createPost("jpa");
 
@@ -91,7 +64,7 @@ class PostControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
                 // .andExpect(jsonPath("$.content[0].title", is(post.getTitle())));
-    } */
+    }
 
     private Post createPost(String title) {
         Post post = new Post();
