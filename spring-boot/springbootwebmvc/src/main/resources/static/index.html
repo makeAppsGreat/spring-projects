@@ -2,10 +2,21 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Welcome</title>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <title>Test CORS</title>
 </head>
 <body>
-  <h2>Welcome!</h2>
-
+    <h2>CORS Client</h2>
+<script>
+    $(function() {
+        $.ajax("http://localhost:8080/hello")
+            .done( function(msg) {
+                alert(msg);
+            })
+            .fail( function() {
+                alert("fail");
+            });
+    });
+</script>
 </body>
 </html>

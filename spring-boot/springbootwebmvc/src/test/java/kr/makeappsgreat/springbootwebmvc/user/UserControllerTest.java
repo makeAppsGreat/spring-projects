@@ -30,7 +30,7 @@ public class UserControllerTest {
     } */
 
     @Test
-    public void createUserToJson() throws Exception {
+    public void createUserResultToJson() throws Exception {
         String userJson = "{\"username\":\"Gayoun\", \"email\":\"makeappsgreat@gmail.com\"}";
 
         mockMvc.perform(post("/users/create")
@@ -44,7 +44,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void createUserToXML() throws Exception {
+    public void createUserResultToXML() throws Exception {
         String userJson = "{\"username\":\"Gayoun\", \"email\":\"makeappsgreat@gmail.com\"}";
 
         mockMvc.perform(post("/users/create")
