@@ -39,6 +39,7 @@
 >
 > 실습 프로젝트 (2022-08-30 ~ )
 > - */spring-mvc-demo* "스프링 MVC 소개 실습"
+> - */servlet-practice* "Servlet Application 실습"
 
 ## /spring-api
 > "스프링 기반 REST API 개발/백기선"
