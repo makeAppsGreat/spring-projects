@@ -18,6 +18,11 @@
 > 수강기간 (2022-08-09 ~ 2022-08-22)
 > 
 > 실습 프로젝트 (2022-08-10 ~ 2022-08-22)
+> - */jdbcsample* "Simple JDBC Connection"
+> - */demospringdata* "JPA 프로그래밍 실습"
+> - */demospringjpa* "Spring Data 실습"
+> - */demoquerydsl* "QueryDSL 실습"
+> - */commonweb* "Spring Data Web 기능 및 Spring Data JPA 실습"
 
 ## /spring-boot
 > "스프링 부트 개념과 활용/백기선"
@@ -33,6 +38,7 @@
 > "스프링 웹 MVC/백기선"
 >
 > 실습 프로젝트 (2022-08-30 ~ )
+> - */spring-mvc-demo* "스프링 MVC 소개 실습"
 
 ## /spring-api
 > "스프링 기반 REST API 개발/백기선"
