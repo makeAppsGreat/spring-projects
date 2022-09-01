@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>Simple</title>
 </head>
 <body>
-    <h2>Hello, world!</h2>
+    <h2>Hello, Handler Mapping!</h2>
 </body>
 </html>

@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>Sample</title>
 </head>
 <body>
-    <h2>Hello, world!</h2>
+    <h2>Hello, Spring MVC!</h2>
 </body>
 </html>
