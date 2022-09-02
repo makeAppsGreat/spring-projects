@@ -44,6 +44,7 @@
 >   + Spring 연동 실습
 >   + Dispatcher Servlet 실습
 >   + WebApplicationInitializer 사용 실습
+>   + @EnableWebMvc 및 WebMvcConfigurer 사용 실습
 
 ## /spring-api
 > "스프링 기반 REST API 개발/백기선"
