@@ -38,14 +38,15 @@
 > "스프링 웹 MVC/백기선"
 >
 > 실습 프로젝트 (2022-08-30 ~ )
-> - */spring-mvc-demo* "스프링 MVC 소개 실습"
+> - */spring-mvc-demo* "Spring MVC 소개 실습"
 > - */servlet-practice*
 >   + Servlet Application 실습
 >   + Spring 연동 실습
 >   + Dispatcher Servlet 실습
 >   + WebApplicationInitializer 사용 실습
 >   + @EnableWebMvc 및 WebMvcConfigurer 사용 실습
-> - */spring-boot-with-jsp* "스프링 부트 JSP 실습"
+> - */spring-boot-with-jsp* "Spring Boot JSP 실습"
+> - */spring-boot-web* "Spring Boot Web 실습"
 
 ## /spring-api
 > "스프링 기반 REST API 개발/백기선"
