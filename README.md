@@ -47,6 +47,11 @@
 >   + @EnableWebMvc 및 WebMvcConfigurer 사용 실습
 > - */spring-boot-with-jsp* "Spring Boot JSP 실습"
 > - */spring-boot-web* "Spring Boot Web 실습"
+>   + Formatter
+>   + DomainClassConverter
+>   + HandlerInterceptor
+>   + ResourceHandler
+>   + HttpMessageConverter
 
 ## /spring-api
 > "스프링 기반 REST API 개발/백기선"
