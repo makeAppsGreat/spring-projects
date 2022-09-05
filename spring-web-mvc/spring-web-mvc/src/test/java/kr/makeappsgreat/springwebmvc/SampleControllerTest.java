@@ -75,4 +75,20 @@ class SampleControllerTest {
                 .andExpect(handler().handlerType(SampleController.class))
                 .andExpect(handler().methodName("helloWithParam"));
     }
+
+    @Test
+    public void testMethod() throws Exception {
+        mockMvc.perform(head("/hello")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(handler().handlerType(SampleController.class))
+                .andExpect(handler().methodName("hello"));
+
+        mockMvc.perform(options("/hello")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(header().exists(HttpHeaders.ALLOW));
+    }
 }
