@@ -52,7 +52,8 @@
 >   + HandlerInterceptor
 >   + ResourceHandler
 >   + HttpMessageConverter
-> - */spring-web-mvc* "Spring MVC 활용"
+> - */spring-web-mvc* "Spring MVC 활용/요청 맵핑하기"
+> - */spring-mvc-handler-method* "Spring MVC 활용/핸들러 메소드"
 
 ## /spring-api
 > "스프링 기반 REST API 개발/백기선"
