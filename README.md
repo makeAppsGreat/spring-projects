@@ -27,7 +27,25 @@
 ## /spring-boot
 > "스프링 부트 개념과 활용/백기선"
 >
-> 실습 프로젝트 (2022-08-23 ~ 2022-08-30)
+> 실습 프로젝트 (2022-08-23 ~ 2022-08-3
+> - */spring-boot-getting-started* "Spring Boot 시작하기"
+> - */youn-spring-boot-starter* "자동 설정 만들기"
+> - */studyspringboot*
+>   + 내장 웹 서버 이해 및 응용
+>   + 외부 설정
+>   + 프로파일
+>   + 로깅
+> - */springboot-test* "테스트 및 테스트 유틸, Spring-Boot-Devtools"
+> - */springbootwebmvc* "Spring Web MVC"
+> - */simplerestserver* "Spring Web MVC, CORS 테스트 서버"
+> - */springbootdata* "Spring Data"
+> - */springbootdatajpa* "Spring Data JPA"
+> - */springbootdataredis* "Spring Data + Redis"
+> - */springbootdatamongodb* "Spring Data + MongoDB"
+> - */springbootsecurity* "Spring Security"
+> - */springbootrestclient* "Spring REST Client"
+> - */springbootactuator* "Spring Boot Actuator"
+> - */springbootadminserver* "Spring Boot Admin"
 
 ## /spring-boot-update
 > "스프링 부트 업데이트/백기선"
