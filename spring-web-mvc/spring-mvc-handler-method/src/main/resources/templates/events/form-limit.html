@@ -7,7 +7,10 @@
 <body>
     <form action="#" th:action="@{/events/form/limit}" method="post" th:object="${event}">
         <p th:if="${#fields.hasErrors('limit')}" th:errors="*{limit}">Incorrect Data</p>
-        Limit : <input type="text" title="limit" th:field="*{limit}" />
+        <Label>Limit : </Label>
+        <input type="text" title="limit" th:field="*{limit}" /><br>
+        <Label>Start : </Label>
+        <input type="text" title="start" th:field="*{start}" />
         <input type="submit" vlaue="Create" />
     </form>
 </body>

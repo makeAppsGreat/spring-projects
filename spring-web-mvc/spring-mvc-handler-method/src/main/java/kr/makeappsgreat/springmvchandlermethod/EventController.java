@@ -4,19 +4,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UrlPathHelper;
 
-import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @SessionAttributes("event")
-public class SampleController {
+public class EventController {
 
     // Unused Mapping
     /* @PostMapping("/events")
@@ -47,9 +46,10 @@ public class SampleController {
 
     @GetMapping("/events/form/name")
     public String eventsFormName(Model model) {
-        model.addAttribute("event", new Event());
+        throw new EventException();
+        // model.addAttribute("event", new Event());
 
-        return "/events/form-name";
+        // return "/events/form-name";
     }
 
     @PostMapping("/events/form/name")
