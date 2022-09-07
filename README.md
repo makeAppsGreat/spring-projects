@@ -27,7 +27,7 @@
 ## /spring-boot
 > "스프링 부트 개념과 활용/백기선"
 >
-> 실습 프로젝트 (2022-08-23 ~ 2022-08-3
+> 실습 프로젝트 (2022-08-23 ~ 2022-08-30)
 > - */spring-boot-getting-started* "Spring Boot 시작하기"
 > - */youn-spring-boot-starter* "자동 설정 만들기"
 > - */studyspringboot*
@@ -55,7 +55,7 @@
 ## /spring-web-mvc
 > "스프링 웹 MVC/백기선"
 >
-> 실습 프로젝트 (2022-08-30 ~ )
+> 실습 프로젝트 (2022-08-30 ~ 2022-09-07)
 > - */spring-mvc-demo* "Spring MVC 소개 실습"
 > - */servlet-practice*
 >   + Servlet Application 실습
