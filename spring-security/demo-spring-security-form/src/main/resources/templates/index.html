@@ -6,5 +6,11 @@
 </head>
 <body>
     <h2 th:text="${message}">Welcome</h2>
+    <hr th:if="${username != null}">
+    <p><a th:if="${username != null}" href="/logout">logout</a></p>
+    <hr>
+    <p><a href="/info">info</a></p>
+    <p><a href="/dashboard">dashboard</a></p>
+    <p><a href="/admin">admin</a></p>
 </body>
 </html>

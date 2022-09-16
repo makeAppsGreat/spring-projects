@@ -13,8 +13,10 @@ public class SampleController {
     public String index(Model model, Principal principal) {
         if (principal == null) {
             model.addAttribute("message", "Hello, Spring Security!");
+            model.addAttribute("username", null);
         } else {
             model.addAttribute("message", String.format("Hello, %s!", principal.getName()));
+            model.addAttribute("username", principal.getName());
         }
 
         return "index";
