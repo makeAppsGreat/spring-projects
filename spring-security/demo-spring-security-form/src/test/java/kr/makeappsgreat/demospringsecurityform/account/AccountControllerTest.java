@@ -39,9 +39,15 @@ class AccountControllerTest {
     }
 
     @Test
-    @WithUser
+    // @WithUser
     public void dashboard_user() throws Exception {
-        mockMvc.perform(get("/dashboard"))
+        Account user = new Account();
+        user.setUsername("youn");
+        user.setPassword("simple");
+        user.setRole("USER");
+        accountService.createNew(user);
+
+        mockMvc.perform(get("/dashboard").with(user("youn").password("simple").roles("USER")))
                 .andDo(print())
                 .andExpect(status().isOk());
     }

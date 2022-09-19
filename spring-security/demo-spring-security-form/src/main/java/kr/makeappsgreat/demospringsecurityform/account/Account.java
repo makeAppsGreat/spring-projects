@@ -24,8 +24,6 @@ public class Account {
     private String role;
 
     public void encodePassword(PasswordEncoder passwordEncoder) {
-        System.out.println(">> " + password);
         password = passwordEncoder.encode(password);
-        System.out.println(">> " + password);
     }
 }
