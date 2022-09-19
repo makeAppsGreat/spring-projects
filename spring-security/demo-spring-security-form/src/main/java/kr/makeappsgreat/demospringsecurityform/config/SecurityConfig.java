@@ -1,5 +1,6 @@
 package kr.makeappsgreat.demospringsecurityform.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
@@ -8,7 +9,10 @@ import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -46,8 +50,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+
         http.authorizeRequests()
-                .mvcMatchers("/", "/info", "/account/**").permitAll()
+                .mvcMatchers("/", "/info", "/account/**", "/favicon.ico").permitAll()
                 .mvcMatchers("/user").hasRole("USER")
                 .mvcMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -59,6 +65,30 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+    /**
+     * 1. Using pattern
+     *
+     * You are asking Spring Security to ignore Mvc [pattern='/favicon.ico'].
+     * This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+     *
+     * Will not secure Mvc [pattern='/favicon.ico']
+     *
+     *
+     * 2. Using StaticResourceRequest
+     *
+     * You are asking Spring Security to ignore
+     * org.springframework.boot.autoconfigure.security.servlet.StaticResourceRequest$StaticResourceRequestMatcher@7352418c.
+     * This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+     *
+     * Will not secure org.springframework.boot.autoconfigure.security.servlet.StaticResourceRequest$StaticResourceRequestMatcher@7352418c
+     */
+    /* @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        // return (web) -> web.ignoring().mvcMatchers("/favicon.ico");
+        return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+    } */
+
 
     /* @Bean
     public UserDetailsService users() {
