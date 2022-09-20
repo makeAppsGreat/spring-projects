@@ -53,7 +53,7 @@ public class SecurityConfig {
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 
         http.authorizeRequests()
-                .mvcMatchers("/", "/info", "/account/**", "/favicon.ico").permitAll()
+                .mvcMatchers("/", "/info", "/account/**", "/signup", "/favicon.ico").permitAll()
                 .mvcMatchers("/user").hasRole("USER")
                 .mvcMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().authenticated()
