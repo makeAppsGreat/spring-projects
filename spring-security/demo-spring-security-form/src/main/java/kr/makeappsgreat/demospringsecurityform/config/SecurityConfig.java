@@ -1,10 +1,15 @@
 package kr.makeappsgreat.demospringsecurityform.config;
 
+import kr.makeappsgreat.demospringsecurityform.account.AccountService;
+import kr.makeappsgreat.demospringsecurityform.common.LoggingFilter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.access.vote.AffirmativeBased;
@@ -18,15 +23,25 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
+import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@Slf4j
 public class SecurityConfig {
+
+    @Autowired
+    AccountService accountService;
 
     // 1. Using AccessDecisionManager -> ~.accessDecisionManager( ... )
     /* public AccessDecisionManager accessDecisionManager() {
@@ -52,6 +67,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 
+        http.addFilterBefore(new LoggingFilter(), WebAsyncManagerIntegrationFilter.class);
+
         http.authorizeRequests()
                 .mvcMatchers("/", "/info", "/account/**", "/signup", "/favicon.ico").permitAll()
                 .mvcMatchers("/user").hasRole("USER")
@@ -61,7 +78,24 @@ public class SecurityConfig {
                 .expressionHandler(expressionHandler());
 
         http.formLogin()
-                .and().httpBasic();
+                .loginPage("/login")
+                .permitAll();
+
+        http.rememberMe()
+                .userDetailsService(accountService)
+                .key("remember-me-sample");
+
+        http.httpBasic();
+
+        http.exceptionHandling()
+                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                    String username = principal.getUsername();
+
+                    log.warn("{} is denied to access \"{}\".", username, request.getRequestURI());
+                    response.sendRedirect("/access-denied");
+                });
+
 
         return http.build();
     }

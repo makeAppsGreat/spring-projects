@@ -7,7 +7,11 @@
 <body>
     <h2 th:text="${message}">Welcome</h2>
     <hr th:if="${username != null}">
-    <p><a th:if="${username != null}" href="/logout">logout</a></p>
+    <p>
+        <a th:if="${username == null}" href="/login">login</a>
+        <a th:if="${username == null}" href="/signup">signup</a>
+        <a th:if="${username != null}" href="/logout">logout</a>
+    </p>
     <hr>
     <p><a href="/info">info</a></p>
     <p><a href="/dashboard">dashboard</a></p>
