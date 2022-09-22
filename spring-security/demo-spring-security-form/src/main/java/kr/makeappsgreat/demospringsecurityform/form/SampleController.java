@@ -1,9 +1,14 @@
 package kr.makeappsgreat.demospringsecurityform.form;
 
+import kr.makeappsgreat.demospringsecurityform.account.Account;
 import kr.makeappsgreat.demospringsecurityform.account.AccountContext;
 import kr.makeappsgreat.demospringsecurityform.account.AccountRepository;
+import kr.makeappsgreat.demospringsecurityform.account.UserAccount;
+import kr.makeappsgreat.demospringsecurityform.book.BookRepository;
+import kr.makeappsgreat.demospringsecurityform.common.CurrentUser;
 import kr.makeappsgreat.demospringsecurityform.common.SecurityLogger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,14 +27,19 @@ public class SampleController {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private BookRepository bookRepository;
+
     @GetMapping("/")
-    public String index(Model model, Principal principal) {
-        if (principal == null) {
+    // public String index(Model model, Principal principal) {
+    // public String index(Model model, @AuthenticationPrincipal UserAccount userAccount) {
+    public String index(Model model, @CurrentUser Account account) {
+        if (account == null) {
             model.addAttribute("message", "Hello, Spring Security!");
             model.addAttribute("username", null);
         } else {
-            model.addAttribute("message", String.format("Hello, %s!", principal.getName()));
-            model.addAttribute("username", principal.getName());
+            model.addAttribute("message", String.format("Hello, %s!", account.getUsername()));
+            model.addAttribute("username", account.getUsername());
         }
 
         return "index";
@@ -46,7 +56,7 @@ public class SampleController {
     public String dashboard(Model model, Principal principal) {
         model.addAttribute("message", String.format("Hello, %s!", principal.getName()));
 
-        AccountContext.setAccount(accountRepository.findByUsername(principal.getName()));
+        // AccountContext.setAccount(accountRepository.findByUsername(principal.getName()));
         sampleService.dashboard();
 
         return "dashboard";
@@ -62,6 +72,7 @@ public class SampleController {
     @GetMapping("/user")
     public String user(Model model, Principal principal) {
         model.addAttribute("message", String.format("Hello, user %s!", principal.getName()));
+        model.addAttribute("books", bookRepository.findCurrentUserBooks());
 
         return "user";
     }

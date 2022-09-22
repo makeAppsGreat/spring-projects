@@ -1,5 +1,6 @@
 package kr.makeappsgreat.demospringsecurityform.account;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,8 +18,7 @@ import static org.springframework.security.test.web.servlet.response.SecurityMoc
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -29,6 +29,14 @@ class AccountControllerTest {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @BeforeEach
+    public void deleteUser() {
+        accountRepository.deleteAll();
+    }
 
     @Test
     @WithAnonymousUser
@@ -42,7 +50,7 @@ class AccountControllerTest {
     // @WithUser
     public void dashboard_user() throws Exception {
         Account user = new Account();
-        user.setUsername("youn");
+        user.setUsername("user");
         user.setPassword("simple");
         user.setRole("USER");
         accountService.createNew(user);
@@ -55,9 +63,13 @@ class AccountControllerTest {
     @Test
     @WithUser
     public void admin_user() throws Exception {
+        /* mockMvc.perform(get("/admin"))
+                .andDo(print())
+                .andExpect(status().isForbidden()); */
         mockMvc.perform(get("/admin"))
                 .andDo(print())
-                .andExpect(status().isForbidden());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/access-denied"));
     }
 
     @Test
@@ -71,7 +83,7 @@ class AccountControllerTest {
     @Test
     @Transactional
     public void login_success() throws Exception {
-        String username = "youn";
+        String username = "user";
         String password = "simple";
         createUser(username, password);
 
@@ -82,7 +94,7 @@ class AccountControllerTest {
     @Test
     @Transactional
     public void login_fail() throws Exception {
-        String username = "youn";
+        String username = "user";
         String password = "simple";
         createUser(username, password);
 
