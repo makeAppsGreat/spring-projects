@@ -73,10 +73,11 @@
 > - */spring-web-mvc* "Spring MVC 활용/요청 맵핑하기"
 > - */spring-mvc-handler-method* "Spring MVC 활용/핸들러 메소드"
 
-## /spring-api
+## /spring-rest-api
 > "스프링 기반 REST API 개발/백기선"
 >
->
+> 실습 프로젝트 (2022-09-23 ~ )
+> - */demo-rest-api* "이벤트 생성 API 개발 실습"
 
 ## /spring-security
 > "스프링 시큐리티/백기선"
