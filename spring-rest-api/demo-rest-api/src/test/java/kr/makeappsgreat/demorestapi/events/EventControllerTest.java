@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -35,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @Import(RestDocsConfiguration.class)
+@ActiveProfiles("test")
 public class EventControllerTest {
 
     @Autowired
@@ -193,9 +195,10 @@ public class EventControllerTest {
                             .content(objectMapper.writeValueAsString(eventDto)))
                     .andDo(print())
                     .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$[0].objectName").exists())
-                    .andExpect(jsonPath("$[0].defaultMessage").exists())
-                    .andExpect(jsonPath("$[0].code").exists());
+                    .andExpect(jsonPath("errors[0].objectName").exists())
+                    .andExpect(jsonPath("errors[0].defaultMessage").exists())
+                    .andExpect(jsonPath("errors[0].code").exists())
+                    .andExpect(jsonPath("_links.index").exists());
         }
     }
 }
