@@ -1,5 +1,6 @@
 package kr.makeappsgreat.demorestapi.events;
 
+import kr.makeappsgreat.demorestapi.accounts.Account;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,6 +30,8 @@ public class Event {
     private boolean free = false;
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus = EventStatus.DRAFT;
+    @ManyToOne
+    private Account manager;
 
     public void update() {
         // Update offline
