@@ -76,7 +76,7 @@
 ## /spring-rest-api
 > "스프링 기반 REST API 개발/백기선"
 >
-> 실습 프로젝트 (2022-09-23 ~ )
+> 실습 프로젝트 (2022-09-23 ~ 2022-10-03)
 > - */demo-rest-api* "이벤트 생성 REST API 개발 실습"
 
 ## /spring-security
