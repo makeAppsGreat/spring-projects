@@ -249,7 +249,8 @@ public class EventControllerTest extends BaseControllerTest {
         @DisplayName("정상 요청")
         public void getEvent() throws Exception {
             // Given
-            Event event = generateEvent(100);
+            Account account = createAccount();
+            Event event = generateEvent(100, account);
 
             // When & Then
             mockMvc.perform(get("/api/events/{id}", event.getId()))
@@ -279,7 +280,8 @@ public class EventControllerTest extends BaseControllerTest {
         @DisplayName("정상 요청")
         public void updateEvent() throws Exception {
             // Given
-            Event event = generateEvent(200);
+            Account account = createAccount();
+            Event event = generateEvent(200, account);
             String descriptionToEdit = "수정된 이벤트 설명";
 
             EventDto eventDto = modelMapper.map(event, EventDto.class);
@@ -287,7 +289,7 @@ public class EventControllerTest extends BaseControllerTest {
 
             // When & Then
             mockMvc.perform(put("/api/events/{id}", event.getId())
-                            .header(HttpHeaders.AUTHORIZATION, getBearerToken())
+                            .header(HttpHeaders.AUTHORIZATION, getBearerToken(false))
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(eventDto)))
                     .andDo(print())
@@ -359,7 +361,8 @@ public class EventControllerTest extends BaseControllerTest {
         }
     }
 
-    private Event generateEvent(int index) {
+    private Event generateEvent(int index) { return generateEvent(index, null); }
+    private Event generateEvent(int index, Account account) {
         Event event = Event.builder()
                 .name("Event " + index)
                 .description("Test Event")
@@ -375,22 +378,18 @@ public class EventControllerTest extends BaseControllerTest {
                 .offline(true)
                 .eventStatus(EventStatus.DRAFT)
                 .build();
+        if (account != null) event.setManager(account);
 
         return eventRepository.save(event);
     }
 
-    private String getBearerToken() throws Exception {
-        String email = "event-controller@makeappsgreat.kr";
-        String password = "simple";
+    private final String email = "event-controller@makeappsgreat.kr";
+    private final String password = "simple";
+    private String getBearerToken() throws Exception { return getBearerToken(true); }
+    private String getBearerToken(boolean needToCreateAccount) throws Exception {
+        if (needToCreateAccount) createAccount();
         String clientId = properties.getClientId();
         String clientSecret = properties.getClientSecret();
-
-        Account account = Account.builder()
-                .email(email)
-                .password(password)
-                .roles(Set.of(AccountRole.ADMIN, AccountRole.USER))
-                .build();
-        accountService.saveAccount(account);
 
 
         ResultActions perform = mockMvc.perform(MockMvcRequestBuilders.post("/oauth/token")
@@ -402,5 +401,15 @@ public class EventControllerTest extends BaseControllerTest {
         String responseBody = perform.andReturn().getResponse().getContentAsString();
         Jackson2JsonParser parser = new Jackson2JsonParser();
         return "Bearer " + parser.parseMap(responseBody).get("access_token").toString();
+    }
+
+    private Account createAccount() {
+        Account account = Account.builder()
+                .email(email)
+                .password(password)
+                .roles(Set.of(AccountRole.ADMIN, AccountRole.USER))
+                .build();
+
+        return accountService.saveAccount(account);
     }
 }
