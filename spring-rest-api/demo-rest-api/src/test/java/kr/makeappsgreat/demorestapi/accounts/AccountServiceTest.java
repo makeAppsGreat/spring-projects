@@ -27,7 +27,7 @@ public class AccountServiceTest {
     @Test
     public void findByUsername() {
         // Given
-        String email = "test@makeappsgreat.kr";
+        String email = "account-service@makeappsgreat.kr";
         String password = "simple";
 
         Account account = Account.builder()

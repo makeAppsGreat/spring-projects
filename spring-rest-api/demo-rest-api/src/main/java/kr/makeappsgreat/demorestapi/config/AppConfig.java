@@ -34,15 +34,24 @@ public class AppConfig {
             @Autowired
             AccountService accountService;
 
+            @Autowired
+            AppProperties properties;
+
             @Override
             public void run(ApplicationArguments args) throws Exception {
-                Account account = Account.builder()
-                        .email("youn@makeappsgreat.kr")
-                        .password("simple")
+                Account admin = Account.builder()
+                        .email(properties.getAdminUsername())
+                        .password(properties.getAdminPassword())
                         .roles(Set.of(AccountRole.ADMIN, AccountRole.USER))
                         .build();
+                accountService.saveAccount(admin);
 
-                accountService.saveAccount(account);
+                Account user = Account.builder()
+                        .email(properties.getUserUsername())
+                        .password(properties.getUserPassword())
+                        .roles(Set.of(AccountRole.USER))
+                        .build();
+                accountService.saveAccount(user);
             }
         };
     }

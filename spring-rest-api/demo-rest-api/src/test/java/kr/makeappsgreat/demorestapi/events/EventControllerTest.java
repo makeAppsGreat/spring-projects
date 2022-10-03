@@ -6,6 +6,7 @@ import kr.makeappsgreat.demorestapi.accounts.AccountRepository;
 import kr.makeappsgreat.demorestapi.accounts.AccountRole;
 import kr.makeappsgreat.demorestapi.accounts.AccountService;
 import kr.makeappsgreat.demorestapi.common.BaseControllerTest;
+import kr.makeappsgreat.demorestapi.config.AppProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -46,6 +47,9 @@ public class EventControllerTest extends BaseControllerTest {
 
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    AppProperties properties;
 
     @BeforeEach
     public void setup() {
@@ -223,6 +227,7 @@ public class EventControllerTest extends BaseControllerTest {
 
         // When & Then
         mockMvc.perform(get("/api/events")
+                        .header(HttpHeaders.AUTHORIZATION, getBearerToken())
                         .param("page", "1")
                         .param("size", "10")
                         .param("sort", "name,DESC"))
@@ -232,6 +237,7 @@ public class EventControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("_links.self").exists())
                 .andExpect(jsonPath("_embedded.eventList[0]._links.self").exists())
                 .andExpect(jsonPath("_links.profile").exists())
+                .andExpect(jsonPath("_links.create-event").exists())
                 .andDo(document("query-events"));
     }
 
@@ -374,10 +380,10 @@ public class EventControllerTest extends BaseControllerTest {
     }
 
     private String getBearerToken() throws Exception {
-        String email = "test@makeappsgreat.kr";
+        String email = "event-controller@makeappsgreat.kr";
         String password = "simple";
-        String clientId = "myApp";
-        String clientSecret = "pass";
+        String clientId = properties.getClientId();
+        String clientSecret = properties.getClientSecret();
 
         Account account = Account.builder()
                 .email(email)

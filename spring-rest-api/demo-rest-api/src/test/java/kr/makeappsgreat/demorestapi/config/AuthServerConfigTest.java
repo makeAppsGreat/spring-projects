@@ -21,14 +21,17 @@ class AuthServerConfigTest extends BaseControllerTest {
     @Autowired
     AccountService accountService;
 
+    @Autowired
+    AppProperties properties;
+
     @Test
     @DisplayName("인증 토큰 발급 테스트")
     public void getAuthToken() throws Exception {
         // Given
-        String email = "test@makeappsgreat.kr";
+        String email = "auth-serverconfig@makeappsgreat.kr";
         String password = "simple";
-        String clientId = "myApp";
-        String clientSecret = "pass";
+        String clientId = properties.getClientId();
+        String clientSecret = properties.getClientSecret();
 
         Account account = Account.builder()
                 .email(email)
